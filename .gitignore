@@ -1,5 +1,5 @@
 .idea
-.env.example
+.env
 .git
 .DS_Store
 server
