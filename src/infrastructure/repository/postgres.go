@@ -36,7 +36,6 @@ func NewDB() *gorm.DB {
 		os.Getenv("DB_USER"),
 		os.Getenv("DB_PASSWORD"),
 		os.Getenv("DB_NAME"))
-	fmt.Println(psqlInfo)
 	db, err := gorm.Open("postgres", psqlInfo)
 	if err != nil {
 		panic("Can't connect to database")
