@@ -11,15 +11,6 @@ type Database struct {
 	Connection *gorm.DB
 }
 
-const (
-	// Local DB
-	host     = os.Getenv("DB_HOST")
-	port     = os.Getenv("DB_PORT")
-	user     = os.Getenv("DB_USER")
-	password = os.Getenv("DB_PASSWORD")
-	dbname   = os.Getenv("DB_NAME")
-)
-
 func NewRepository() Database {
 
 	db := NewDB()
@@ -38,14 +29,19 @@ func (db *Database) CloseDB() {
 }
 
 func NewDB() *gorm.DB {
-	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
+	psqlInfo := fmt.Sprintf("host=%s port=%s user=%s "+
 		"password=%s dbname=%s sslmode=require",
-		host, port, user, password, dbname)
+		os.Getenv("DB_HOST"),
+		os.Getenv("DB_PORT"),
+		os.Getenv("DB_USER"),
+		os.Getenv("DB_PASSWORD"),
+		os.Getenv("DB_NAME"))
+	fmt.Println(psqlInfo)
 	db, err := gorm.Open("postgres", psqlInfo)
 	if err != nil {
 		panic("Can't connect to database")
 	}
 	db.AutoMigrate(&model.User{}, &model.Product{}, &model.Category{}, &model.Cart{})
-
+    print("here")
 	return db
 }

@@ -2,3 +2,4 @@
 .env.example
 .git
 .DS_Store
+server
