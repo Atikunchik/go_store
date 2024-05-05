@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  golangwithframe:
+    build: ./
+    command: ./wait-for-postgres.sh db ./server
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+      - redis
+    environment:
+      - POSTGRES_PASSWORD=admin12345
+
+
+  redis:
+    image: redis:latest
+    volumes:
+      - /var/lib/redis/data:/var/lib/redis/data
+    ports:
+      - 6379:6379
+
+
+
+  db:
+    restart: always
+    image: postgres:latest
+    volumes:
+      - /var/lib/postgres/data:/var/lib/postgres/data
+    environment:
+      - POSTGRES_PASSWORD=admin12345
+    ports:
+      - 5436:5432
