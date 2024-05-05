@@ -2,11 +2,12 @@ package main
 
 import (
 	"GolangwithFrame/app/controller"
-	middleware2 "GolangwithFrame/app/middleware"
 	"GolangwithFrame/src/app/service"
 	"GolangwithFrame/src/infrastructure/cache"
 	"GolangwithFrame/src/infrastructure/repository"
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
+	"log"
 	_ "github.com/lib/pq"
 )
 
@@ -14,8 +15,9 @@ var (
 )
 
 func init() {
-	middleware2.LoadEnvVariables()
-
+    if err := godotenv.Load(); err != nil {
+        log.Print("No .env file found")
+    }
 }
 
 func main() {
